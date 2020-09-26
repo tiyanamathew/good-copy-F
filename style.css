@@ -1,0 +1,104 @@
+.exampleInputEmail1 {
+  font-size: 48px;
+  width: auto;
+  display: inline;
+  border: transparent;
+  vertical-align: middle;
+}
+
+#date-time {
+  background: transparent;
+  font-size: 18px;
+  border-color: transparent;
+  color: #6c757d;
+  padding: 1px;
+}
+
+.btn {
+  font-size: 48px;
+  color: #6c757d;
+  width: auto;
+  display: inline;
+  background: #ffd6e0;
+  border: #ff4271;
+  border-width: 100px;
+}
+.card-text {
+  font-size: 48px;
+  color: #6c757d;
+}
+
+.card-title {
+  font-size: 36px;
+  color: #ff4271;
+}
+
+.card-subtitle {
+  font-size: 24px;
+  color: #6c757d;
+}
+
+.fas {
+  font-size: 100px;
+}
+
+.its {
+  font-size: 48px;
+  color: #ff4271;
+}
+
+.sunny {
+  font-size: 24px;
+  color: #6c757d;
+}
+
+.btn-group-vertical {
+  width: 1em;
+  text-align: center;
+  color: #6c757d;
+}
+
+#farenhiet {
+  background: #ffd6e0;
+  border-color: #ff4271;
+  color: #6c757d;
+  text-decoration: none;
+}
+#celcius {
+  background-color: transparent;
+  border-color: #ff4271;
+  color: #6c757d;
+  text-decoration: none;
+}
+
+#celcius :hover {
+  text-decoration: none;
+}
+
+#farenhiet :hover {
+  text-decoration: none;
+}
+.five {
+  border: 20px;
+  color: #ff4271;
+  text-align: center;
+}
+
+.five img {
+  width: 150px;
+}
+
+.five .card-text {
+  font-size: 25px;
+}
+
+body {
+  border: 2em;
+  color: #ff4271;
+}
+
+#github {
+  color: #ff4271;
+  text-decoration: none;
+  text-align: center;
+}
