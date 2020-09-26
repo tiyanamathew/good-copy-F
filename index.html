@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Weather App
+    </title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://kit.fontawesome.com/af3e25e341.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+
+  <body>
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col">
+          <form id="search-form">
+            <input
+              type="text"
+              id="city-input"
+              placeholder="Enter a city..."
+              class="exampleInputEmail1"
+            />
+            <button class="btn" type="submit">Search</button>
+            <button id="current-location-button" class="btn" type="button">
+              Current
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col">
+          <div class="row no-gutters">
+            <div class="col-12">
+              <div class="card-body">
+                <p id="city" class="card-text">Toronto</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card-body" id="te">
+                <h5 class="card-title">
+                  <span id="current-temperature">28</span>˚F
+                </h5>
+                <p id="date-time">
+                  Date And Time:
+                </p>
+                <h1 id="current-time"></h1>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col mb-3">
+          <div class="card-body">
+            <h2 class="its">
+              It is...
+            </h2>
+            <p class="sunny">Sunny! Don't forget your sunscreen. ☀️</p>
+          </div>
+        </div>
+        <div class="col-2">
+          <div class="btn-group-vertical">
+            <button id="celcius">
+              <a href="https://suspicious-hawking-ae0e54.netlify.app/">
+              C°
+              </a>
+            </button>
+            <button id="farenhiet">
+              F°
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" id="forecast">
+        <div class="col five">
+          <div class="card-body">
+            <h5 class="card-title">Tuesday</h5>
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRqvhageIEMkDr9Ncz7gWMYsn8wnXmT8xjkuw&usqp=CAU"
+              class="card-img-top"
+              alt="weather"
+            />
+            <p class="card-text five">17˚ - 27˚</p>
+          </div>
+        </div>
+        <div class="col five">
+          <div class="card-body">
+            <h5 class="card-title">Wednesday</h5>
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAflBMVEX////h6O3/rDP/pxv/phP/qCL/qiz/qSj2+Prg6fDo7fH///3w9Pb/v23/tVDf6/X/3bT/7Nb/+/X/8+T/vGT/4sD/6c//uVr/053/rzv/sUL/1qb/zpL/xXvk4tz/x4L/y4rq1rzxyZfuz6js0rLn3c/2v3j1wX//oQDzxIopu3HPAAAIKUlEQVR4nO2daZfiKhCGR7ao6USzuWur3T3L//+DNxoXSICAEjFcng9z5vS0Ui9VFFsl8+uXx+PxeDwej8fj8Xg8Ho/H4/F4PE8RFp/xMiCraJ3ZNqUTwg2GAQEAEILRPLFtjnkSgsEdgva2DTJNgghggFvbJpklg6AO3Ng2yig5aSgEyKV8M0NNgYBEts0yCM+FTjkxxTyBAK9tG2aMoplnzmGa2zbMGJuAqxBg24YZI+IOw3IgprYtMwU/0ZRTojOpRuRD6Mzq1CvsP15h//EK+49X2H+8wv7TJ4WzfUwIyNd6mwJDCmefK0KWkWbjek3EqDrTxWirsy3YC/aHWrun6fJyoIzhJtS1XJEtdeYZoIWGcfxTDADUvyJZwXvjmHQT3nPWTpgr92TCO2orvaF+KFywB8oEFQ9JkDOvh1oQK0tccgciVDZz2uiiDiRum5GmLnHBDVOi+vGmwA7OBwpeoClLTHmHbcqHiTyBgKwe1sIl5GdDZYnrpkRlE7kCSyeaPW1dC7KhssS8/gVENcwEAgHRyMQKzAVztoZE1osEKyZ8kUDDKyLBsbyWxEW1Wqj0obniZC8WCLDGjNxKJm5HI91sVgjiEkQi1e6XCNSZTttJ+BcPmhLLniqK9bRIlH9fJtDs7ZzMh6XEucGmaLjXjvdmPw02JRmHJ6DJEaHcqtnLuViUSyu6ueuMBFuSa78aXX7zl103OrmwFqzXb20ujbaWylvrxImiffMF0zfIGwNjIgzDNEuyLA1Vkmlbpyqv2xUJgbRHSUs6zYr1dg4gQgie/sBxtJnO5JN+Ie9T89sneeYGQNyj2TQKypme0F1ESIAhjDcz8cfkQx93UFIlnX0BFjgkW8QIi9xPSuWRyBefskwaxOYFCraIcoXFnFqMClRCuOGmKZnCbgTKJXJSd7hewhZ5F3shb50qiVKNdaIm4kDlTIjrQBidzY+jvOFHQREO6M6D51ZFEvG0/ptLeSpsaITbepyL2urOgydEXgzYRrO8Xk7aTgBrvSQ4R+5WoMiLNePWauOv8S3stpi/8O5aIN+L7Hyf5rLdpAxCZm1NdS+Q50UC6L5PiHxLIAUxhcOfja56hcDGCXvZ83QenD4WodUyB+O/Md1b+1pv4pcIrJfdY8amRcviji+uXMKt8j/Hr+/Dz8/P+GM4vH7dmu5Ngkzu6qWE++tKjARsXO31hyAp1f373o0mk1HF4Eyp8/SF9zsnAuMZ35xOSBercpcA0XLPzNRbbYGl3V+7yU0Xy/gkcjo/t4SjV+qrRCbFrLYQaWaGFgL4+2fCV3fh49rSawZgCxtNgQT9Kd0nkXfT+CbIt1dNfTBS0PdOGlsOjuoE4KCm7zoerZO2bQRZ4O+Bqr53caOollsQod8TDX0nN9rWx7sClQgkO02BJZYjVX6xUSOIdzoR+h4SdWI0iLWG4B2bg1F84sAJ0UcFWpXIr5fhC1w9LNBioIrqGLgx+tAYtCwx1BiE6PCMwMHAjkINF+Kj/jTBYGdeVB+FJH5SoJ1so5FI4VODsMKCQvW5MPj3tAttxKnGciZ4Xt/AQj5VzzP4y4ALB6+P05YyDYqlEX0vd2LzfRCns0EMqvtPetP49Exx47UKa1XqBOLoeNjtTobsdodjDm93bNCQvqsTh8OP8fj6o/H4cvyoRVostnke3cij/bRxlcnUhGDy53A++KyaHZV/HxwifO4E8tuUC8t0Worj/4uOzFkEy/5nCTBaLdhzPcqFGHwNmmcvo8nuGASlC59crymjeKqTzQU3gAQzt6H3uYKQo+jkczI6lrH6IoEnFDxZyO5XEHWlfat6OZ0Nipuc7OLIWJCq0ObIluIZfJd4mQ0J/pafDY5GBhZsWkg1tpQ90nXyVU0IIT+tHnqxwIF0fSct1qkC9Xqjdi5xJ6tXO0gR0UaE+/xHLU4vNbPhEjx5MNEx/FAVPmp2h8RUPJM39eAZrhu3CivNS5ie3A1/3lggfzTG7QIBrO4rU2RwudkVTYUKAgGuSgozZOBgonMag1FJYTVfJPDNY7SiLnGprjBD5tbTXVKTqDIOr1H6953zKAUrsaVI/szlYYd03gsXDmoSFwplW7jaQ6Wv2hI9D61Q4Ub+WjEb2rZbHWZebD9cQpfynaFtuzWgJUpr1s8uvNYhf9g2Wwd6KHIeTWe4PcNr22g96DidyyQSdCsxs22zHsxQ/BQXauPlvZzNts2aMFNGEkNeDRCBAfU4ZZ8SzZlfDMkmPj2IRYNAVNCHib1T2FiDh1nCUH8koncKtS8E+qdQ9+S/fwq1nWjbXn10nWjbXn10L8n5N0BvjfsKNcO0h6lGN0xt2/sASp4742iYMtfL4/FHrzaIFbIwHfbQYxzE+mxbZgrX9QkGokP6+Ap7mE8kcK4U3UgwN5rJ1DGBTYW2DTJOXaFte8wzdl1gbUJ0bQyecXeauOJ6jDIKnYxROtM4tVa7M3Y9RimFjrqQWpe6OQrpvYVtS7pi6HqQDpwP0oHzQTp2Pkj/R8PQzUU3Pd+7mmjcn+9d31fQy25HFQ6dV+j87pc+73ZztqAEujnjD11X6P5Z8NB1hfULC/dSTU2gewOxefdr2yLDcKpM3ApTbhmNbaOMwhPolBMFtV62zTKHqJjNGSeKq/VsW2YIWTmibduMIK23dGHal+lzYSi2Vz33fK+v8p7FPktUfGdUfwNV+UWZPU03Ws8d9DBSdV9V37dIfeRV/H3S+OiLanui8an/SeHtH7h45PWQTZXUGyffh8fefenxeDwej8fj8Xg8Ho/H4/F4PB7H+Q/XF66CFn0kWwAAAABJRU5ErkJggg=="
+              class="card-img-top"
+              alt="weather"
+            />
+            <p class="card-text five">19˚ - 28˚</p>
+          </div>
+        </div>
+        <div class="col five">
+          <div class="card-body">
+            <h5 class="card-title">Thursday</h5>
+            <div class="imgfive">
+              <img
+                src="data:image/png;base64,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"
+                class="card-img-top"
+                alt="weather"
+              />
+            </div>
+            <p class="card-text five">20˚ - 26˚</p>
+          </div>
+        </div>
+        <div class="col five">
+          <div class="card-body">
+            <h5 class="card-title">Friday</h5>
+            <div class="imgfive">
+              <img
+                src="data:image/png;base64,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"
+                class="card-img-top"
+                alt="weather"
+              />
+            </div>
+            <p class="card-text five">20˚ - 26˚</p>
+          </div>
+        </div>
+        <div class="col five">
+          <div class="card-body">
+            <h5 class="card-title">Saturday</h5>
+            <div class="imgfive">
+              <img
+                src="data:image/png;base64,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"
+                class="card-img-top"
+                alt="weather"
+              />
+            </div>
+            <p class="card-text five">21˚ - 24˚</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p id="github">
+      <a href="https://github.com/tiyanamathew/">
+        Link to GitHub
+      </a>
+    </p>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script src="script.js"></script>
+  </body>
+</html>
