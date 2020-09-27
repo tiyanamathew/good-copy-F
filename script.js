@@ -78,6 +78,19 @@ function showTemperature(response) {
   temperatureElement.innerHTML = temperature;
   messageOutput.innerHTML = updateMessage(temperature);
 }
+function showTemperature(response) {
+  let cityElement = document.querySelector("#city");
+  let temperatureElement = document.querySelector("#current-temperature");
+  let messageOutput = document.querySelector(`.sunny`);
+  let temperature = Math.round(response.data.main.temp);
+  let humidity = document.querySelector("#humidity");
+  let wind = document.querySelector("#wind");
+  cityElement.innerHTML = response.data.name;
+  temperatureElement.innerHTML = temperature;
+  messageOutput.innerHTML = updateMessage(temperature);
+  humidity.innerHTML = response.data.main.humidity;
+  wind.innerHTML = response.data.wind.speed;
+}
 
 function displayForecast(response) {
   let forecastElement = document.querySelector("#forecast");
